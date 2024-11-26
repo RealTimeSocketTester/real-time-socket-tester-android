@@ -102,6 +102,7 @@ fun MainScreen(
                         AppTextField(
                             label = "HOST / IP",
                             value = state.ipHostValue,
+                            isError = state.isIpHostError,
                             onValueChange = ipTextChange,
                             modifier = Modifier.weight(1.0f),
                         )
@@ -111,6 +112,7 @@ fun MainScreen(
                         AppTextField(
                             label = "PORT",
                             value = state.portValue,
+                            isError = state.isPortError,
                             onValueChange = portTextChange,
                             modifier = Modifier.width(130.dp),
                         )
@@ -133,6 +135,7 @@ fun MainScreen(
                         AppTextField(
                             label = "Message",
                             value = state.messageValue,
+                            isError = state.isMessageError,
                             onValueChange = messageTextChange,
                             modifier = Modifier.weight(1.0f),
                         )

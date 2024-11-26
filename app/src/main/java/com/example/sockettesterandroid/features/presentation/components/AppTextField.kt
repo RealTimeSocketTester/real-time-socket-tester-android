@@ -28,8 +28,12 @@ fun AppTextField(
         },
         keyboardOptions = keyboardOptions,
         isError = isError,
-        supportingText = if (isError) {
-            { Text(text = message) }
+        supportingText = if (isError && message.trim().isNotEmpty() && message.trim()
+                .isNotBlank()
+        ) {
+            {
+                Text(message)
+            }
         } else null,
         enabled = isEnable,
     )

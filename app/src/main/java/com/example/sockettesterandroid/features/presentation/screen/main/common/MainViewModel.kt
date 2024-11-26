@@ -16,25 +16,55 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val state: State<MainState> = _state
 
     fun onIpHostTextChanged(value: String) {
-        _state.value = state.value.copy(
-            ipHostValue = value,
-        )
+        if (value.trim().isEmpty() || value.trim().isBlank()) {
+            _state.value = state.value.copy(
+                ipHostValue = value,
+                isIpHostError = true,
+            )
+        } else {
+            _state.value = state.value.copy(
+                ipHostValue = value,
+                isIpHostError = false,
+            )
+        }
     }
 
     fun onPortTextChanged(value: String) {
-        _state.value = state.value.copy(
-            portValue = value,
-        )
+        if (value.trim().isEmpty() || value.trim().isBlank()) {
+            _state.value = state.value.copy(
+                isPortError = true,
+                portValue = value,
+            )
+        } else {
+            _state.value = state.value.copy(
+                isPortError = false,
+                portValue = value,
+            )
+        }
     }
 
     fun onMessageTextChanged(value: String) {
-        _state.value = state.value.copy(
-            messageValue = value,
-        )
+        if (value.trim().isEmpty() || value.trim().isBlank()) {
+            _state.value = state.value.copy(
+                messageValue = value,
+                isMessageError = true,
+            )
+        } else {
+            _state.value = state.value.copy(
+                messageValue = value,
+                isMessageError = false,
+            )
+        }
+
     }
 
     fun onConnect() {
+        onIpHostTextChanged(_state.value.ipHostValue)
+        onPortTextChanged(_state.value.portValue)
 
+        if (_state.value.isPortError || _state.value.isMessageError || _state.value.isIpHostError) {
+            return
+        }
     }
 
     fun onDisconnect() {
@@ -42,6 +72,10 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onSend() {
+        onMessageTextChanged(_state.value.messageValue)
 
+        if (_state.value.isMessageError) {
+            return
+        }
     }
 }
