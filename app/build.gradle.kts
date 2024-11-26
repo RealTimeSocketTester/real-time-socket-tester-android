@@ -62,6 +62,14 @@ dependencies {
     //Hilt Android
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.gson)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    
 }
 
 kapt {

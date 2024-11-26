@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.example.sockettesterandroid.core.navigation.AppNavigationGraph
 import com.example.sockettesterandroid.ui.theme.SocketTesterAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,5 +39,5 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppEntryPoint() {
-
+    AppNavigationGraph()
 }
