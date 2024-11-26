@@ -3,9 +3,13 @@ package com.example.sockettesterandroid.features.presentation.screen.main.common
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.sockettesterandroid.features.domain.repository.CommunicationRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor() : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val communicationRepository: CommunicationRepository) :
+    ViewModel() {
     sealed class SocketState {
         data object NotConnected : SocketState()
         data object Connected : SocketState()
