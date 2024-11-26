@@ -22,7 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.sockettesterandroid.features.presentation.components.AppTextField
@@ -43,30 +45,35 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel(),
 ) {
-
+    val state by remember { viewModel.state }
     val ipTextChange = remember<(String) -> Unit> {
         {
-
+            viewModel.onIpHostTextChanged(it)
         }
     }
     val portTextChange = remember<(String) -> Unit> {
         {
-
+            viewModel.onPortTextChanged(it)
         }
     }
     val messageTextChange = remember<(String) -> Unit> {
         {
-
+            viewModel.onMessageTextChanged(it)
         }
     }
     val onConnect = remember {
         {
-
+            viewModel.onConnect()
+        }
+    }
+    val onDisconnect = remember {
+        {
+            viewModel.onDisconnect()
         }
     }
     val onSend = remember {
         {
-
+            viewModel.onSend()
         }
     }
 
@@ -90,9 +97,11 @@ fun MainScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(0.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppTextField(
                             label = "HOST / IP",
+                            value = state.ipHostValue,
                             onValueChange = ipTextChange,
                             modifier = Modifier.weight(1.0f),
                         )
@@ -101,18 +110,41 @@ fun MainScreen(
                         )
                         AppTextField(
                             label = "PORT",
+                            value = state.portValue,
                             onValueChange = portTextChange,
+                            modifier = Modifier.width(130.dp),
+                        )
+                        Spacer(
+                            modifier = Modifier.width(10.dp)
+                        )
+                        AppButton(
+                            text = "Connect",
+                            onClick = onConnect,
                             modifier = Modifier.width(100.dp),
                         )
                     }
                     Spacer(modifier = Modifier.height(5.dp))
-                    AppButton(text = "Connect", onClick = onConnect)
-                    AppTextField(
-                        label = "Message",
-                        onValueChange = messageTextChange,
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    AppButton(text = "Send", onClick = onSend)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(0.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AppTextField(
+                            label = "Message",
+                            value = state.messageValue,
+                            onValueChange = messageTextChange,
+                            modifier = Modifier.weight(1.0f),
+                        )
+                        Spacer(
+                            modifier = Modifier.width(10.dp)
+                        )
+                        AppButton(
+                            text = "Send",
+                            onClick = onSend,
+                            modifier = Modifier.width(100.dp),
+                        )
+                    }
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         "Results",

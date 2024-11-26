@@ -16,6 +16,7 @@ fun AppTextField(
     isError: Boolean = false,
     message: String = "",
     modifier: Modifier = Modifier.fillMaxWidth(),
+    isEnable: Boolean = true,
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -30,5 +31,6 @@ fun AppTextField(
         supportingText = if (isError) {
             { Text(text = message) }
         } else null,
+        enabled = isEnable,
     )
 }
