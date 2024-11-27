@@ -69,6 +69,10 @@ class MainViewModel @Inject constructor(private val communicationRepository: Com
         if (_state.value.isPortError || _state.value.isMessageError || _state.value.isIpHostError) {
             return
         }
+
+        _state.value = state.value.copy(
+            socketState = SocketState.Connecting,
+        )
     }
 
     fun onDisconnect() {

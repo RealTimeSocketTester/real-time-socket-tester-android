@@ -1,7 +1,7 @@
 package com.example.sockettesterandroid.features.presentation.screen.main.common
 
 data class MainState(
-    val state: MainViewModel.SocketState = MainViewModel.SocketState.NotConnected,
+    val socketState: MainViewModel.SocketState = MainViewModel.SocketState.NotConnected,
     val ipHostValue: String = "",
     val portValue: String = "",
     val messageValue: String = "",

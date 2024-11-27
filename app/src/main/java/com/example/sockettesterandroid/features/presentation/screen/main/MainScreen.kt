@@ -105,6 +105,7 @@ fun MainScreen(
                             isError = state.isIpHostError,
                             onValueChange = ipTextChange,
                             modifier = Modifier.weight(1.0f),
+                            isEnable = state.socketState == MainViewModel.SocketState.NotConnected,
                         )
                         Spacer(
                             modifier = Modifier.width(10.dp)
@@ -115,6 +116,7 @@ fun MainScreen(
                             isError = state.isPortError,
                             onValueChange = portTextChange,
                             modifier = Modifier.width(130.dp),
+                            isEnable = state.socketState == MainViewModel.SocketState.NotConnected,
                         )
                         Spacer(
                             modifier = Modifier.width(10.dp)
@@ -122,6 +124,7 @@ fun MainScreen(
                         AppButton(
                             text = "Connect",
                             onClick = onConnect,
+                            isLoading = state.socketState == MainViewModel.SocketState.Connecting,
                             modifier = Modifier.width(100.dp),
                         )
                     }
@@ -133,6 +136,7 @@ fun MainScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppTextField(
+                            isEnable = state.socketState == MainViewModel.SocketState.Connected,
                             label = "Message",
                             value = state.messageValue,
                             isError = state.isMessageError,
@@ -143,6 +147,7 @@ fun MainScreen(
                             modifier = Modifier.width(10.dp)
                         )
                         AppButton(
+                            isEnable = state.socketState == MainViewModel.SocketState.Connected,
                             text = "Send",
                             onClick = onSend,
                             modifier = Modifier.width(100.dp),
