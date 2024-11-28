@@ -1,6 +1,5 @@
 package com.example.sockettesterandroid.features.presentation.screen.splash
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +27,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.sockettesterandroid.core.navigation.Routes
 import com.example.sockettesterandroid.core.utils.AppUtility
-import com.example.sockettesterandroid.features.presentation.screen.main.MainScreen
 import com.example.sockettesterandroid.features.presentation.screen.splash.common.SplashViewModel
 import com.example.sockettesterandroid.ui.theme.BlueColor
 import com.example.sockettesterandroid.ui.theme.TextBlueColor
