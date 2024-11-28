@@ -72,6 +72,9 @@ dependencies {
     //Socket
     implementation(libs.socket.io.client)
 
+    //UI Color
+    implementation(libs.accompanist.systemuicontroller)
+
 }
 
 kapt {

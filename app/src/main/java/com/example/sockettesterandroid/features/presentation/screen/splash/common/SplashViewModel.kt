@@ -21,7 +21,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     fun initialize() {
         viewModelScope.launch {
-            delay(2000) // Wait for 2 seconds
+            delay(3000) // Wait for 2 seconds
             _uiEvents.emit(UIEvents.GoToMainScreen)
         }
     }

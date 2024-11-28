@@ -15,7 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.example.sockettesterandroid.core.navigation.AppNavigationGraph
+import com.example.sockettesterandroid.ui.theme.BottomBarColor
 import com.example.sockettesterandroid.ui.theme.SocketTesterAndroidTheme
+import com.example.sockettesterandroid.ui.theme.StatusBarColor
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +29,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SocketTesterAndroidTheme {
+                val systemUiController = rememberSystemUiController()
+
+                //Status Bar Color
+                systemUiController.setSystemBarsColor(
+                    color = StatusBarColor,
+                    darkIcons = false,
+                )
+                //Bottom Bar color
+                systemUiController.setNavigationBarColor(
+                    color = BottomBarColor,
+                    darkIcons = false,
+                )
+
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                     modifier = Modifier.fillMaxSize(),
