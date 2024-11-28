@@ -1,14 +1,19 @@
 package com.example.sockettesterandroid.features.presentation.screen.main.common
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sockettesterandroid.features.domain.repository.CommunicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val communicationRepository: CommunicationRepository) :
+class MainViewModel @Inject constructor(
+    private val communicationRepository: CommunicationRepository,
+) :
     ViewModel() {
     sealed class SocketState {
         data object NotConnected : SocketState()
@@ -73,10 +78,32 @@ class MainViewModel @Inject constructor(private val communicationRepository: Com
         _state.value = state.value.copy(
             socketState = SocketState.Connecting,
         )
+
+        viewModelScope.launch {
+            communicationRepository.startConnection(
+                ipAddress = _state.value.ipHostValue,
+                port = _state.value.portValue,
+                onConnected = {
+                   _state.value = state.value.copy(
+                       socketState = SocketState.Connected,
+                   )
+                },
+                onResult = {
+                    Log.d("MAINVIEWMODEL", it)
+                },
+                onDone = {
+                    _state.value = state.value.copy(
+                        socketState = SocketState.NotConnected,
+                    )
+                },
+            )
+        }
     }
 
     fun onDisconnect() {
-
+        viewModelScope.launch {
+            communicationRepository.stopConnection()
+        }
     }
 
     fun onSend() {
@@ -84,6 +111,13 @@ class MainViewModel @Inject constructor(private val communicationRepository: Com
 
         if (_state.value.isMessageError) {
             return
+        }
+
+        viewModelScope.launch {
+            communicationRepository.sendData(_state.value.messageValue)
+            _state.value = state.value.copy(
+                messageValue = "",
+            )
         }
     }
 }

@@ -61,14 +61,14 @@ fun MainScreen(
             viewModel.onMessageTextChanged(it)
         }
     }
-    val onConnect = remember {
+    val onConnectOrDisconnect = remember {
         {
-            viewModel.onConnect()
-        }
-    }
-    val onDisconnect = remember {
-        {
-            viewModel.onDisconnect()
+            if (state.socketState == MainViewModel.SocketState.Connected) {
+                viewModel.onDisconnect()
+            } else if (state.socketState == MainViewModel.SocketState.NotConnected) {
+                viewModel.onConnect()
+            }
+
         }
     }
     val onSend = remember {
@@ -115,17 +115,19 @@ fun MainScreen(
                             value = state.portValue,
                             isError = state.isPortError,
                             onValueChange = portTextChange,
-                            modifier = Modifier.width(130.dp),
+                            modifier = Modifier.width(100.dp),
                             isEnable = state.socketState == MainViewModel.SocketState.NotConnected,
                         )
                         Spacer(
                             modifier = Modifier.width(10.dp)
                         )
                         AppButton(
-                            text = "Connect",
-                            onClick = onConnect,
+                            text = if (state.socketState == MainViewModel.SocketState.NotConnected) {
+                                "Connect"
+                            } else "Disconnect",
+                            onClick = onConnectOrDisconnect,
                             isLoading = state.socketState == MainViewModel.SocketState.Connecting,
-                            modifier = Modifier.width(100.dp),
+                            modifier = Modifier.width(120.dp),
                         )
                     }
                     Spacer(modifier = Modifier.height(5.dp))
@@ -150,7 +152,7 @@ fun MainScreen(
                             isEnable = state.socketState == MainViewModel.SocketState.Connected,
                             text = "Send",
                             onClick = onSend,
-                            modifier = Modifier.width(100.dp),
+                            modifier = Modifier.width(120.dp),
                         )
                     }
                     Spacer(modifier = Modifier.height(5.dp))

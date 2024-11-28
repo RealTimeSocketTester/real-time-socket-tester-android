@@ -69,7 +69,9 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    
+    //Socket
+    implementation(libs.socket.io.client)
+
 }
 
 kapt {
