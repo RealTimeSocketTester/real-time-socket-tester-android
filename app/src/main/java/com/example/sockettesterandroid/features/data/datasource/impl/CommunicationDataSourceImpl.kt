@@ -1,5 +1,6 @@
 package com.example.sockettesterandroid.features.data.datasource.impl
 
+import android.util.Log
 import com.example.sockettesterandroid.features.data.datasource.CommunicationDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -48,7 +49,6 @@ class CommunicationDataSourceImpl @Inject constructor() :
                             BufferedWriter(OutputStreamWriter(socket!!.getOutputStream())),
                             true
                         )
-
                     mBufferIn = BufferedReader(InputStreamReader(socket!!.getInputStream()))
 
                     isRunning = true
@@ -83,9 +83,18 @@ class CommunicationDataSourceImpl @Inject constructor() :
     }
 
     override suspend fun sendData(data: String) {
-        if (mBufferOut != null && !mBufferOut!!.checkError()) {
-            mBufferOut!!.println(data)
-            mBufferOut!!.flush()
+        withContext(Dispatchers.IO) {
+            try {
+                if (socket?.isConnected == true && mBufferOut != null && !mBufferOut!!.checkError()) {
+                    Log.d("CommunicationDataSourceImpl", "Sending data: $data")
+                    mBufferOut!!.println(data)
+                    mBufferOut!!.flush()
+                } else {
+                    Log.e("CommunicationDataSourceImpl", "Cannot send data: Socket not connected or output stream is null")
+                }
+            } catch (e: IOException) {
+                Log.e("CommunicationDataSourceImpl", "Error while sending data: ${e.message}")
+            }
         }
     }
 }
