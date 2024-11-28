@@ -1,6 +1,7 @@
 package com.example.sockettesterandroid.features.data.datasource
 
 import com.example.sockettesterandroid.features.domain.entity.ResultEntity
+import com.example.sockettesterandroid.features.domain.entity.SocketResultEntity
 
 interface CommunicationDataSource {
     suspend fun startConnection(
@@ -8,7 +9,7 @@ interface CommunicationDataSource {
         port: String,
         onConnected: (() -> Unit)? = null,
         onError: ((String) -> Unit)? = null,
-        onResult: ((String) -> Unit)? = null,
+        onResult: ((SocketResultEntity) -> Unit)? = null,
         onDone: (() -> Unit)? = null,
     )
 

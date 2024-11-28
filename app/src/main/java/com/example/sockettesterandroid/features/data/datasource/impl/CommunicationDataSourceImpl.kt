@@ -1,7 +1,10 @@
 package com.example.sockettesterandroid.features.data.datasource.impl
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.sockettesterandroid.features.data.datasource.CommunicationDataSource
+import com.example.sockettesterandroid.features.domain.entity.SocketResultEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.*
@@ -9,6 +12,7 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.net.SocketTimeoutException
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class CommunicationDataSourceImpl @Inject constructor() :
@@ -26,12 +30,13 @@ class CommunicationDataSourceImpl @Inject constructor() :
         isRunning = false
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun startConnection(
         ipAddress: String,
         port: String,
         onConnected: (() -> Unit)?,
         onError: ((String) -> Unit)?,
-        onResult: ((String) -> Unit)?,
+        onResult: ((SocketResultEntity) -> Unit)?,
         onDone: (() -> Unit)?,
     ) {
         return withContext(Dispatchers.IO) {
@@ -56,7 +61,11 @@ class CommunicationDataSourceImpl @Inject constructor() :
                     while (isRunning) {
                         val mServerMessage = mBufferIn!!.readLine()
                         if (mServerMessage != null && onResult != null) {
-                            onResult(mServerMessage)
+                            val data = SocketResultEntity(
+                                data = mServerMessage,
+                                date = LocalDateTime.now(),
+                            )
+                            onResult(data)
                         }
                     }
                 } else {

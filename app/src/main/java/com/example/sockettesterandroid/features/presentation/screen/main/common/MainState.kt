@@ -1,5 +1,7 @@
 package com.example.sockettesterandroid.features.presentation.screen.main.common
 
+import com.example.sockettesterandroid.features.domain.model.SocketResultModel
+
 data class MainState(
     val socketState: MainViewModel.SocketState = MainViewModel.SocketState.NotConnected,
     val ipHostValue: String = "",
@@ -11,4 +13,5 @@ data class MainState(
     val ipHostErrorMessage: String = "",
     val portErrorMessage: String = "",
     val messageErrorMessage: String = "",
+    val resultList: List<SocketResultModel> = emptyList(),
 )

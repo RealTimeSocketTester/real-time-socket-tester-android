@@ -1,6 +1,8 @@
 package com.example.sockettesterandroid.features.presentation.screen.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,11 +13,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,6 +41,7 @@ import com.example.sockettesterandroid.features.presentation.screen.main.common.
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,7 +78,6 @@ fun MainScreen(
             } else if (state.socketState == MainViewModel.SocketState.NotConnected) {
                 viewModel.onConnect()
             }
-
         }
     }
     val onSend = remember {
@@ -107,9 +116,7 @@ fun MainScreen(
                             modifier = Modifier.weight(1.0f),
                             isEnable = state.socketState == MainViewModel.SocketState.NotConnected,
                         )
-                        Spacer(
-                            modifier = Modifier.width(10.dp)
-                        )
+                        Spacer(modifier = Modifier.width(10.dp))
                         AppTextField(
                             label = "PORT",
                             value = state.portValue,
@@ -118,9 +125,7 @@ fun MainScreen(
                             modifier = Modifier.width(100.dp),
                             isEnable = state.socketState == MainViewModel.SocketState.NotConnected,
                         )
-                        Spacer(
-                            modifier = Modifier.width(10.dp)
-                        )
+                        Spacer(modifier = Modifier.width(10.dp))
                         AppButton(
                             text = if (state.socketState == MainViewModel.SocketState.NotConnected) {
                                 "Connect"
@@ -145,9 +150,7 @@ fun MainScreen(
                             onValueChange = messageTextChange,
                             modifier = Modifier.weight(1.0f),
                         )
-                        Spacer(
-                            modifier = Modifier.width(10.dp)
-                        )
+                        Spacer(modifier = Modifier.width(10.dp))
                         AppButton(
                             isEnable = state.socketState == MainViewModel.SocketState.Connected,
                             text = "Send",
@@ -168,13 +171,29 @@ fun MainScreen(
                             .background(
                                 color = Color.Black,
                                 shape = RoundedCornerShape(10.dp)
-                            ),
-                    )
+                            )
+                            .padding(10.dp),
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            items(state.resultList) { item ->
+                                Text(
+                                    item.data,
+                                    style = TextStyle(
+                                        color = Color.White,
+                                    ),
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable

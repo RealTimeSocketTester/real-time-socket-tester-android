@@ -2,6 +2,8 @@ package com.example.sockettesterandroid.features.data.repository
 
 import com.example.sockettesterandroid.features.data.datasource.CommunicationDataSource
 import com.example.sockettesterandroid.features.domain.entity.ResultEntity
+import com.example.sockettesterandroid.features.domain.mapper.entity.toSocketResultModel
+import com.example.sockettesterandroid.features.domain.model.SocketResultModel
 import com.example.sockettesterandroid.features.domain.repository.CommunicationRepository
 import javax.inject.Inject
 
@@ -13,7 +15,7 @@ class CommunicationRepositoryImpl @Inject() constructor(
         ipAddress: String,
         port: String,
         onConnected: (() -> Unit)?,
-        onResult: ((String) -> Unit)?,
+        onResult: ((SocketResultModel) -> Unit)?,
         onDone: (() -> Unit)?
     ) {
         communicationDataSource.startConnection(
@@ -21,7 +23,10 @@ class CommunicationRepositoryImpl @Inject() constructor(
             port = port,
             onConnected = onConnected,
             onDone = onDone,
-            onResult = onResult,
+            onResult = {
+                val data = it.toSocketResultModel()
+                onResult?.invoke(data)
+            },
         )
     }
 

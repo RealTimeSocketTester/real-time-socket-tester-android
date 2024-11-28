@@ -2,9 +2,13 @@ package com.example.sockettesterandroid.features.presentation.screen.main.common
 
 import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sockettesterandroid.features.domain.model.SocketResultModel
 import com.example.sockettesterandroid.features.domain.repository.CommunicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -84,12 +88,13 @@ class MainViewModel @Inject constructor(
                 ipAddress = _state.value.ipHostValue,
                 port = _state.value.portValue,
                 onConnected = {
-                   _state.value = state.value.copy(
-                       socketState = SocketState.Connected,
-                   )
+                    _state.value = state.value.copy(
+                        socketState = SocketState.Connected,
+                    )
                 },
                 onResult = {
-                    Log.d("MAINVIEWMODEL", it)
+                    val updatedItems = _state.value.resultList + it
+                    _state.value = _state.value.copy(resultList = updatedItems)
                 },
                 onDone = {
                     _state.value = state.value.copy(
