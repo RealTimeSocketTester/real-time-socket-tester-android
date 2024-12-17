@@ -64,7 +64,7 @@ fun ConnectScreen(
             viewModel.onPortTextChanged(it)
         }
     }
-    val onConnect = remember { { } }
+    val onConnect = remember { { viewModel.onConnect() } }
 
     Scaffold(
         content = {
@@ -77,7 +77,10 @@ fun ConnectScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(20.dp),
+                            .padding(
+                                vertical = 20.dp,
+                                horizontal = 30.dp,
+                            ),
                     ) {
                         Column(
                             modifier = Modifier
@@ -114,6 +117,7 @@ fun ConnectScreen(
                                     horizontalArrangement = Arrangement.Start,
                                 ) {
                                     Checkbox(
+                                        enabled = state.status == ConnectViewModel.Status.Idle,
                                         modifier = Modifier.scale(1.3f),
                                         checked = state.isWebSocketChecked,
                                         onCheckedChange = { isChecked ->
@@ -141,7 +145,7 @@ fun ConnectScreen(
                                         isError = state.isIpHostError,
                                         onValueChange = ipTextChange,
                                         modifier = Modifier.weight(1.0f),
-                                        isEnable = true,
+                                        isEnable = state.status == ConnectViewModel.Status.Idle,
                                     )
                                     if (!state.isWebSocketChecked)
                                         Spacer(modifier = Modifier.width(10.dp))
@@ -152,11 +156,12 @@ fun ConnectScreen(
                                             isError = state.isPortError,
                                             onValueChange = portTextChange,
                                             modifier = Modifier.width(100.dp),
-                                            isEnable = true,
+                                            isEnable = state.status == ConnectViewModel.Status.Idle,
                                         )
                                 }
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(20.dp))
                                 AppButton(
+                                    isLoading = state.status == ConnectViewModel.Status.Connecting,
                                     isEnable = true,
                                     text = "CONNECT",
                                     onClick = onConnect,

@@ -11,4 +11,5 @@ data class ConnectState(
     val ipHostErrorMessage: String = "",
     val portErrorMessage: String = "",
     val messageErrorMessage: String = "",
+    val status: ConnectViewModel.Status = ConnectViewModel.Status.Idle,
 )

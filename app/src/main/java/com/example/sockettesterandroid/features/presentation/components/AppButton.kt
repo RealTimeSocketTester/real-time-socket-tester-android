@@ -2,6 +2,7 @@ package com.example.sockettesterandroid.features.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,7 +27,7 @@ fun AppButton(
     progressColor: Color = Color.White,
 ) {
     Button(
-        modifier = modifier,
+        modifier = modifier.height(50.dp),
         onClick = {
             if (!isLoading) {
                 onClick()
