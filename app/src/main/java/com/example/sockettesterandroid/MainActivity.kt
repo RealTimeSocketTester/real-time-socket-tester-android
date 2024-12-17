@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.example.sockettesterandroid.core.navigation.AppNavigationGraph
 import com.example.sockettesterandroid.ui.theme.BottomBarColor
+import com.example.sockettesterandroid.ui.theme.DeepCharcoal
 import com.example.sockettesterandroid.ui.theme.SocketTesterAndroidTheme
 import com.example.sockettesterandroid.ui.theme.StatusBarColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -33,12 +34,12 @@ class MainActivity : ComponentActivity() {
 
                 //Status Bar Color
                 systemUiController.setSystemBarsColor(
-                    color = StatusBarColor,
+                    color = DeepCharcoal,
                     darkIcons = false,
                 )
                 //Bottom Bar color
                 systemUiController.setNavigationBarColor(
-                    color = BottomBarColor,
+                    color = DeepCharcoal,
                     darkIcons = false,
                 )
 

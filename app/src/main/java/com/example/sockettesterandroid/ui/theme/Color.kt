@@ -20,3 +20,11 @@ val BottomBarColor = Color(0xff282c34)
 
 val TextBlueColor = Color(0xff06bcee)
 val TextGrayColor = Color(0xffdfe4ea)
+
+val DeepCharcoal = Color(0xff121212)
+val LightGray = Color(0xffE0E0E0)
+val PrimaryAccent = Color(0xff1E88E5)
+val SecondaryAccent = Color(0xff00BCD4)
+val Green = Color(0xff4CAF50)
+val Red = Color(0xffF44336)
+val SoftGray = Color(0xff2E2E2E)

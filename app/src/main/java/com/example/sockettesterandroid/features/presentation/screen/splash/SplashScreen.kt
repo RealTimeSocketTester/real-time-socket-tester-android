@@ -47,6 +47,10 @@ fun SplashScreen(
                     navController.popBackStack()
                     navController.navigate(Routes.MAIN)
                 }
+                is SplashViewModel.UIEvents.GoToConnectScreen -> {
+                    navController.popBackStack()
+                    navController.navigate(Routes.CONNECT)
+                }
             }
         }
     }

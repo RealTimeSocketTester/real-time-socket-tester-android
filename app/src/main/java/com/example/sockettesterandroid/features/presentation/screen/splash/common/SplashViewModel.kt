@@ -14,6 +14,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     sealed class UIEvents {
         data object GoToMainScreen : UIEvents()
+        data object GoToConnectScreen : UIEvents()
     }
 
     private val _uiEvents = MutableSharedFlow<UIEvents>()
@@ -22,7 +23,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
     fun initialize() {
         viewModelScope.launch {
             delay(3000) // Wait for 2 seconds
-            _uiEvents.emit(UIEvents.GoToMainScreen)
+            _uiEvents.emit(UIEvents.GoToConnectScreen)
         }
     }
 }
